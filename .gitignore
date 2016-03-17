@@ -1,0 +1,8 @@
+#Junk folders
+bin*
+obj*
+.vs*
+
+#Junk files
+*.dll
+*.asset

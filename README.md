@@ -1,0 +1,1 @@
+Converts Unity input axes to a format that can be loaded by https://github.com/daemon3000/InputManager
