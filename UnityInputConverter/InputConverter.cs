@@ -99,7 +99,7 @@ namespace UnityInputConverter
 			return defValue;
 		}
 
-		public InputType ParseInputType(int type, InputType defValue = InputType.Button)
+		private InputType ParseInputType(int type, InputType defValue = InputType.Button)
 		{
 			if(type == 0)
 			{
@@ -115,20 +115,6 @@ namespace UnityInputConverter
 			}
 
 			return defValue;
-		}
-
-		public int Clamp(int value, int min, int max)
-		{
-			if(value < min)
-			{
-				value = min;
-			}
-			else if(value > max)
-			{
-				value = max;
-			}
-
-			return value;
 		}
 	}
 }

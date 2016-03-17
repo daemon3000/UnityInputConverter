@@ -48,7 +48,7 @@
     <Compile Include="AxisConfiguration.cs" />
     <Compile Include="InputConfiguration.cs" />
     <Compile Include="InputSaverXML.cs" />
-    <Compile Include="InputSettingsImporter.cs" />
+    <Compile Include="InputConverter.cs" />
     <Compile Include="InputType.cs" />
     <Compile Include="KeyCodeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
