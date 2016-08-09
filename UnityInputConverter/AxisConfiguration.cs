@@ -5,8 +5,8 @@ namespace UnityInputConverter
 	public sealed class AxisConfiguration
 	{
 		public const int MaxMouseAxes = 3;
-		public const int MaxJoystickAxes = 10;
-		public const int MaxJoysticks = 4;
+		public const int MaxJoystickAxes = 28;
+		public const int MaxJoysticks = 11;
 		
 		public string name;
 		public string description;

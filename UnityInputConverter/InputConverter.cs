@@ -8,21 +8,13 @@ namespace UnityInputConverter
 {
 	public class InputConverter
 	{
-		public void ConvertInput(string sourceFile, string destinationFile)
-		{
-			var inputConfigurations = LoadInput(sourceFile);
-
-			InputSaverXML inputSaver = new InputSaverXML(destinationFile);
-			inputSaver.Save(inputConfigurations);
-		}
-
-		private List<InputConfiguration> LoadInput(string filename)
+		public void ConvertUnityInputManager(string sourceFile, string destinationFile)
 		{
 			List<InputConfiguration> inputConfigurations = new List<InputConfiguration>();
 			IDictionary<object, object> deserializedData = null;
 			InputConfiguration inputConfig = new InputConfiguration("Unity-Imported");
 
-			using(StreamReader reader = File.OpenText(filename))
+			using(StreamReader reader = File.OpenText(sourceFile))
 			{
 				Deserializer deserializer = new Deserializer();
 				deserializedData = deserializer.Deserialize<IDictionary<object, object>>(reader);
@@ -37,15 +29,16 @@ namespace UnityInputConverter
 			foreach(var item in axes)
 			{
 				IDictionary<object, object> axis = (IDictionary<object, object>)item;
-				inputConfig.axes.Add(LoadAxis(axis));
+				inputConfig.axes.Add(ConvertUnityInputAxis(axis));
 			}
 
 			inputConfigurations.Add(inputConfig);
 
-			return inputConfigurations;
+			InputSaverXML inputSaver = new InputSaverXML(destinationFile);
+			inputSaver.Save(inputConfigurations);
 		}
 
-		private AxisConfiguration LoadAxis(IDictionary<object, object> axisData)
+		private AxisConfiguration ConvertUnityInputAxis(IDictionary<object, object> axisData)
 		{
 			AxisConfiguration axisConfig = new AxisConfiguration();
 
