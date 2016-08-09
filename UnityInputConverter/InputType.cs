@@ -1,6 +1,6 @@
 ﻿namespace UnityInputConverter
 {
-	public enum InputType
+	internal enum InputType
 	{
 		Button, 
 		MouseAxis, 

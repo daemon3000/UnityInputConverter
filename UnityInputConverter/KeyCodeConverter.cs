@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace UnityInputConverter
 {
-	public static class KeyCodeConverter
+	internal static class KeyCodeConverter
 	{
 		public static Dictionary<string, KeyCode> Map = new Dictionary<string, KeyCode>()
 		{

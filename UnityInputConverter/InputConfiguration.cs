@@ -2,7 +2,7 @@
 
 namespace UnityInputConverter
 {
-	public sealed class InputConfiguration
+	internal class InputConfiguration
 	{
 		public string name;
 		public List<AxisConfiguration> axes;

@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace UnityInputConverter
 {
-	public sealed class InputSaverXML
+	internal class InputSaverXML
 	{
 		private string _filename;
 		private Stream _outputStream;

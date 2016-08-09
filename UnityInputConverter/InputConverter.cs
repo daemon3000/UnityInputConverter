@@ -99,7 +99,7 @@ namespace UnityInputConverter
 				axes.Add(GenerateUnityMouseAxis(i));
 			}
 
-			for(int j = 0; j < AxisConfiguration.MaxJoysticks; j++)
+			for(int j = 1; j <= AxisConfiguration.MaxJoysticks; j++)
 			{
 				for(int a = 0; a < AxisConfiguration.MaxJoystickAxes; a++)
 				{
@@ -144,7 +144,7 @@ namespace UnityInputConverter
 		{
 			Dictionary<string, object> data = new Dictionary<string, object>();
 			data.Add("serializedVersion", SERIALIZED_VERSION);
-			data.Add("m_Name", string.Format("joy_{0}_axis_{1}", joystick, axis));
+			data.Add("m_Name", string.Format("joy_{0}_axis_{1}", joystick - 1, axis));
 			data.Add("descriptiveName", null);
 			data.Add("descriptiveNegativeName", null);
 			data.Add("negativeButton", null);

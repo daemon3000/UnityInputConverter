@@ -15,7 +15,7 @@ namespace UnityInputConverter.Tests
 			builder.AppendLine();
 			builder.AppendLine("namespace UnityInputConverter");
 			builder.AppendLine("{");
-			builder.AppendLine("\tpublic static class KeyCodeConverter");
+			builder.AppendLine("\tinternal static class KeyCodeConverter");
 			builder.AppendLine("\t{");
 			builder.AppendLine("\t\tpublic static Dictionary<string, KeyCode> Map = new Dictionary<string, KeyCode>()");
 			builder.AppendLine("\t\t{");
