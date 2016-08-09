@@ -7,11 +7,13 @@ namespace UnityInputConverter.Tests
 		public static void Main(string[] args)
 		{
 			InputConverter converter = new InputConverter();
-			string sourceFile = "InputManager.asset";
-			string destinationFile = "InputManager.xml";
+			string convertSourceFile = "InputManager.asset";
+			string convertDestinationFile = "InputManager.xml";
+			string defaultInputManagerDestinationFile = "InputManager_Generated.asset";
 			string keyConverterFile = "KeyCodeConverter.cs";
 			
-			converter.ConvertUnityInputManager(sourceFile, destinationFile);
+			converter.ConvertUnityInputManager(convertSourceFile, convertDestinationFile);
+			converter.GenerateDefaultUnityInputManager(defaultInputManagerDestinationFile);
 			KeyNameGenerator.GenerateKeyNames(keyConverterFile);
 		}
 	}
