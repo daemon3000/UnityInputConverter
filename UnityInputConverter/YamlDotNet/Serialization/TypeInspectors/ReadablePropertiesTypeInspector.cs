@@ -23,9 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization.TypeInspectors
+namespace UnityInputConverter.YamlDotNet.Serialization.TypeInspectors
 {
     /// <summary>
     /// Returns the properties of a type that are readable.

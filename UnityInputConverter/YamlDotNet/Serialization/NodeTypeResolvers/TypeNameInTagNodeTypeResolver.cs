@@ -20,9 +20,9 @@
 // THE SOFTWARE.
 
 using System;
-using YamlDotNet.Core.Events;
+using UnityInputConverter.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Serialization.NodeTypeResolvers
+namespace UnityInputConverter.YamlDotNet.Serialization.NodeTypeResolvers
 {
     public sealed class TypeNameInTagNodeTypeResolver : INodeTypeResolver
     {

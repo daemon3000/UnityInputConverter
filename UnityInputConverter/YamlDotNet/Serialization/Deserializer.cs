@@ -22,18 +22,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization.NodeDeserializers;
-using YamlDotNet.Serialization.NodeTypeResolvers;
-using YamlDotNet.Serialization.ObjectFactories;
-using YamlDotNet.Serialization.TypeInspectors;
-using YamlDotNet.Serialization.TypeResolvers;
-using YamlDotNet.Serialization.Utilities;
-using YamlDotNet.Serialization.ValueDeserializers;
+using UnityInputConverter.YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core.Events;
+using UnityInputConverter.YamlDotNet.Serialization.NamingConventions;
+using UnityInputConverter.YamlDotNet.Serialization.NodeDeserializers;
+using UnityInputConverter.YamlDotNet.Serialization.NodeTypeResolvers;
+using UnityInputConverter.YamlDotNet.Serialization.ObjectFactories;
+using UnityInputConverter.YamlDotNet.Serialization.TypeInspectors;
+using UnityInputConverter.YamlDotNet.Serialization.TypeResolvers;
+using UnityInputConverter.YamlDotNet.Serialization.Utilities;
+using UnityInputConverter.YamlDotNet.Serialization.ValueDeserializers;
 
-namespace YamlDotNet.Serialization
+namespace UnityInputConverter.YamlDotNet.Serialization
 {
     /// <summary>
     /// A façade for the YAML library with the standard configuration.

@@ -23,10 +23,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
+using UnityInputConverter.YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.RepresentationModel
+namespace UnityInputConverter.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Represents a scalar node in the YAML document.
@@ -127,7 +127,7 @@ namespace YamlDotNet.RepresentationModel
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="System.String"/> to <see cref="YamlDotNet.RepresentationModel.YamlScalarNode"/>.
+        /// Performs an implicit conversion from <see cref="System.String"/> to <see cref="UnityInputConverter.YamlDotNet.RepresentationModel.YamlScalarNode"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -137,7 +137,7 @@ namespace YamlDotNet.RepresentationModel
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="YamlDotNet.RepresentationModel.YamlScalarNode"/> to <see cref="System.String"/>.
+        /// Performs an explicit conversion from <see cref="UnityInputConverter.YamlDotNet.RepresentationModel.YamlScalarNode"/> to <see cref="System.String"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>

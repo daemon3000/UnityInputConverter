@@ -21,9 +21,9 @@
 
 using System.IO;
 using System.Globalization;
-using YamlDotNet.Core.Events;
+using UnityInputConverter.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Core
+namespace UnityInputConverter.YamlDotNet.Core
 {
     /// <summary>
     /// Reads events from a sequence of <see cref="ParsingEvent" />.

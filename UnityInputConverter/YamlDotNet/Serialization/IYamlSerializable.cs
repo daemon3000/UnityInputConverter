@@ -19,9 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-using YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization
+namespace UnityInputConverter.YamlDotNet.Serialization
 {
     /// <summary>
     /// Allows an object to customize how it is serialized and deserialized.

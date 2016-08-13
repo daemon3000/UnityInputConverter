@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.RepresentationModel
+namespace UnityInputConverter.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Defines the method needed to be able to visit Yaml elements.

@@ -25,12 +25,12 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using YamlDotNet.Core.Events;
-using ParsingEvent = YamlDotNet.Core.Events.ParsingEvent;
-using TagDirective = YamlDotNet.Core.Tokens.TagDirective;
-using VersionDirective = YamlDotNet.Core.Tokens.VersionDirective;
+using UnityInputConverter.YamlDotNet.Core.Events;
+using ParsingEvent = UnityInputConverter.YamlDotNet.Core.Events.ParsingEvent;
+using TagDirective = UnityInputConverter.YamlDotNet.Core.Tokens.TagDirective;
+using VersionDirective = UnityInputConverter.YamlDotNet.Core.Tokens.VersionDirective;
 
-namespace YamlDotNet.Core
+namespace UnityInputConverter.YamlDotNet.Core
 {
     /// <summary>
     /// Emits YAML streams.

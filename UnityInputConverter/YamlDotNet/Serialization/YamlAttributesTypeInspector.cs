@@ -22,9 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using YamlDotNet.Serialization.TypeInspectors;
+using UnityInputConverter.YamlDotNet.Serialization.TypeInspectors;
 
-namespace YamlDotNet.Serialization
+namespace UnityInputConverter.YamlDotNet.Serialization
 {
     /// <summary>
     /// Applies the Yaml* attributes to another <see cref="ITypeInspector"/>.
@@ -46,13 +46,13 @@ namespace YamlDotNet.Serialization
                 {
                     var descriptor = new PropertyDescriptor(p);
 
-#pragma warning disable 0618 // 'YamlDotNet.Serialization.YamlAliasAttribute' is obsolete: 'Please use YamlMember instead'
+#pragma warning disable 0618 // 'UnityInputConverter.YamlDotNet.Serialization.YamlAliasAttribute' is obsolete: 'Please use YamlMember instead'
                     var alias = p.GetCustomAttribute<YamlAliasAttribute>();
                     if (alias != null)
                     {
                         descriptor.Name = alias.Alias;
                     }
-#pragma warning restore 0618 // 'YamlDotNet.Serialization.YamlAliasAttribute' is obsolete: 'Please use YamlMember instead'
+#pragma warning restore 0618 // 'UnityInputConverter.YamlDotNet.Serialization.YamlAliasAttribute' is obsolete: 'Please use YamlMember instead'
 
                     var member = p.GetCustomAttribute<YamlMemberAttribute>();
                     if (member != null)

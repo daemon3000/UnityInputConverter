@@ -21,9 +21,9 @@
 
 using System;
 using System.Globalization;
-using YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization.EventEmitters
+namespace UnityInputConverter.YamlDotNet.Serialization.EventEmitters
 {
     public sealed class TypeAssigningEventEmitter : ChainedEventEmitter
     {

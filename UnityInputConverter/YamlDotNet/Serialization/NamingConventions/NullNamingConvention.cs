@@ -20,7 +20,7 @@
 //  SOFTWARE.
 
  
-namespace YamlDotNet.Serialization.NamingConventions
+namespace UnityInputConverter.YamlDotNet.Serialization.NamingConventions
 {
     /// <summary>
     /// Performs no naming conversion.

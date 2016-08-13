@@ -21,7 +21,7 @@
 
 using System.Collections.Generic;
 
-namespace YamlDotNet.RepresentationModel
+namespace UnityInputConverter.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Holds state that is used when emitting a stream.

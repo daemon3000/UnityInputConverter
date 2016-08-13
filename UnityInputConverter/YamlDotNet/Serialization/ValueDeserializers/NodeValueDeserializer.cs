@@ -22,11 +22,11 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Serialization.Utilities;
+using UnityInputConverter.YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core.Events;
+using UnityInputConverter.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.ValueDeserializers
+namespace UnityInputConverter.YamlDotNet.Serialization.ValueDeserializers
 {
     public sealed class NodeValueDeserializer : IValueDeserializer
     {

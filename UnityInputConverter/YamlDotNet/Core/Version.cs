@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.Core
+namespace UnityInputConverter.YamlDotNet.Core
 {
     /// <summary>
     /// Specifies the version of the YAML language.

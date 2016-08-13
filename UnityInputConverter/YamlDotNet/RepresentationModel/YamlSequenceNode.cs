@@ -23,11 +23,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
+using UnityInputConverter.YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core.Events;
 using System.Text;
 
-namespace YamlDotNet.RepresentationModel
+namespace UnityInputConverter.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Represents a sequence node in the YAML document.

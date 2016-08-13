@@ -24,9 +24,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using YamlDotNet.Core.Tokens;
+using UnityInputConverter.YamlDotNet.Core.Tokens;
 
-namespace YamlDotNet.Core
+namespace UnityInputConverter.YamlDotNet.Core
 {
     /// <summary>
     /// Converts a sequence of characters into a sequence of YAML tokens.

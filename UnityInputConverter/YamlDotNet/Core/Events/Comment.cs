@@ -20,7 +20,7 @@
 //  SOFTWARE.
 
 
-namespace YamlDotNet.Core.Events
+namespace UnityInputConverter.YamlDotNet.Core.Events
 {
     public class Comment : ParsingEvent
     {

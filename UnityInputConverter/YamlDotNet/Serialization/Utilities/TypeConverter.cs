@@ -21,7 +21,7 @@
 
 // Remarks: This file is imported from the SixPack library. This is ok because
 // the copyright holder has agreed to redistribute this file under the license
-// used in YamlDotNet.
+// used in UnityInputConverter.YamlDotNet.
 
 using System;
 using System.ComponentModel;
@@ -29,7 +29,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace YamlDotNet.Serialization.Utilities
+namespace UnityInputConverter.YamlDotNet.Serialization.Utilities
 {
     /// <summary>
     /// Performs type conversions using every standard provided by the .NET library.

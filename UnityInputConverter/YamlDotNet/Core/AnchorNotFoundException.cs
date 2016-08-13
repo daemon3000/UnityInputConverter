@@ -22,7 +22,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace YamlDotNet.Core
+namespace UnityInputConverter.YamlDotNet.Core
 {
     /// <summary>
     /// The exception that is thrown when an alias references an anchor that does not exist.

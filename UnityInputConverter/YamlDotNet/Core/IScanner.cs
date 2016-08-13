@@ -20,9 +20,9 @@
 //  SOFTWARE.
 
 using System.Collections.Generic;
-using YamlDotNet.Core.Tokens;
+using UnityInputConverter.YamlDotNet.Core.Tokens;
 
-namespace YamlDotNet.Core
+namespace UnityInputConverter.YamlDotNet.Core
 {
     /// <summary>
     /// Defines the interface for a stand-alone YAML scanner that

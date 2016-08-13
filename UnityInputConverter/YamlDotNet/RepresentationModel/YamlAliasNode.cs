@@ -21,9 +21,9 @@
 
 using System;
 using System.Collections.Generic;
-using YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core;
 
-namespace YamlDotNet.RepresentationModel
+namespace UnityInputConverter.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Represents an alias node in the YAML document.

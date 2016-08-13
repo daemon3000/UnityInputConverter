@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.Core
+namespace UnityInputConverter.YamlDotNet.Core
 {
     /// <summary>
     /// Supports implementations of <see cref="Object.GetHashCode"/> by providing methods to combine two hash codes.

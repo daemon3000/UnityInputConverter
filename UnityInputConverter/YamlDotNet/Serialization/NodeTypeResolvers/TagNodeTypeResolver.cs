@@ -21,9 +21,9 @@
 
 using System;
 using System.Collections.Generic;
-using YamlDotNet.Core.Events;
+using UnityInputConverter.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Serialization.NodeTypeResolvers
+namespace UnityInputConverter.YamlDotNet.Serialization.NodeTypeResolvers
 {
     public sealed class TagNodeTypeResolver : INodeTypeResolver
     {

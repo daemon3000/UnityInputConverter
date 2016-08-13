@@ -23,7 +23,7 @@ using System;
 using System.Collections;
 using System.Reflection;
 
-namespace YamlDotNet.Helpers
+namespace UnityInputConverter.YamlDotNet.Helpers
 {
     /// <summary>
     /// Adapts an <see cref="System.Collections.Generic.ICollection{T}" /> to <see cref="IList" />

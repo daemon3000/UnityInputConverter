@@ -22,12 +22,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Helpers;
-using YamlDotNet.Serialization.Utilities;
+using UnityInputConverter.YamlDotNet.Core;
+using UnityInputConverter.YamlDotNet.Core.Events;
+using UnityInputConverter.YamlDotNet.Helpers;
+using UnityInputConverter.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.NodeDeserializers
+namespace UnityInputConverter.YamlDotNet.Serialization.NodeDeserializers
 {
     public sealed class DictionaryNodeDeserializer : INodeDeserializer
     {

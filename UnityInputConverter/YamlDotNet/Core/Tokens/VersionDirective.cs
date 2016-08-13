@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.Core.Tokens
+namespace UnityInputConverter.YamlDotNet.Core.Tokens
 {
     /// <summary>
     /// Represents a version directive token.

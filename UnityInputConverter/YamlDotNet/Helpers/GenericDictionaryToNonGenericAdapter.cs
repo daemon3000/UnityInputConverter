@@ -24,7 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace YamlDotNet.Helpers
+namespace UnityInputConverter.YamlDotNet.Helpers
 {
     /// <summary>
     /// Adapts an <see cref="System.Collections.Generic.IDictionary{TKey, TValue}" /> to <see cref="IDictionary" />

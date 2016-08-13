@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.Serialization
+namespace UnityInputConverter.YamlDotNet.Serialization
 {
   /// <summary>
   /// Instructs the YamlSerializer not to serialize the public field or public read/write property value.
