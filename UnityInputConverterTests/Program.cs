@@ -11,7 +11,7 @@ namespace UnityInputConverter.Tests
 			string convertDestinationFile = "InputManager.xml";
 			string defaultInputManagerDestinationFile = "InputManager_Generated.asset";
 			string keyConverterFile = "KeyCodeConverter.cs";
-			
+
 			converter.ConvertUnityInputManager(convertSourceFile, convertDestinationFile);
 			converter.GenerateDefaultUnityInputManager(defaultInputManagerDestinationFile);
 			KeyNameGenerator.GenerateKeyNames(keyConverterFile);

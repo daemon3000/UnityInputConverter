@@ -37,14 +37,16 @@ namespace UnityInputConverter.YamlDotNet.Core
 
         public int Length
         {
-            get {
+            get
+            {
                 return value.Length;
             }
         }
 
         public bool EndOfInput
         {
-            get {
+            get
+            {
                 return IsOutside(Position);
             }
         }

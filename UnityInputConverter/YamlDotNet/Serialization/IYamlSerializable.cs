@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+using System;
 using UnityInputConverter.YamlDotNet.Core;
 
 namespace UnityInputConverter.YamlDotNet.Serialization
@@ -26,6 +27,7 @@ namespace UnityInputConverter.YamlDotNet.Serialization
     /// <summary>
     /// Allows an object to customize how it is serialized and deserialized.
     /// </summary>
+    [Obsolete("Please use IYamlConvertible instead")]
     public interface IYamlSerializable
     {
         /// <summary>

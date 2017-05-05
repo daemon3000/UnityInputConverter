@@ -35,7 +35,7 @@ namespace UnityInputConverter.YamlDotNet.Serialization.EventEmitters
             _assignTypeWhenDifferent = assignTypeWhenDifferent;
         }
 
-        public override void Emit(ScalarEventInfo eventInfo)
+        public override void Emit(ScalarEventInfo eventInfo, IEmitter emitter)
         {
             var suggestedStyle = ScalarStyle.Plain;
 
@@ -63,7 +63,15 @@ namespace UnityInputConverter.YamlDotNet.Serialization.EventEmitters
                     break;
 
                 case TypeCode.Single:
+                    eventInfo.Tag = "tag:yaml.org,2002:float";
+                    eventInfo.RenderedValue = YamlFormatter.FormatNumber((float)eventInfo.Source.Value);
+                    break;
+
                 case TypeCode.Double:
+                    eventInfo.Tag = "tag:yaml.org,2002:float";
+                    eventInfo.RenderedValue = YamlFormatter.FormatNumber((double)eventInfo.Source.Value);
+                    break;
+
                 case TypeCode.Decimal:
                     eventInfo.Tag = "tag:yaml.org,2002:float";
                     eventInfo.RenderedValue = YamlFormatter.FormatNumber(eventInfo.Source.Value);
@@ -102,19 +110,19 @@ namespace UnityInputConverter.YamlDotNet.Serialization.EventEmitters
                 eventInfo.Style = suggestedStyle;
             }
 
-            base.Emit(eventInfo);
+            base.Emit(eventInfo, emitter);
         }
 
-        public override void Emit(MappingStartEventInfo eventInfo)
+        public override void Emit(MappingStartEventInfo eventInfo, IEmitter emitter)
         {
             AssignTypeIfDifferent(eventInfo);
-            base.Emit(eventInfo);
+            base.Emit(eventInfo, emitter);
         }
 
-        public override void Emit(SequenceStartEventInfo eventInfo)
+        public override void Emit(SequenceStartEventInfo eventInfo, IEmitter emitter)
         {
             AssignTypeIfDifferent(eventInfo);
-            base.Emit(eventInfo);
+            base.Emit(eventInfo, emitter);
         }
 
         private void AssignTypeIfDifferent(ObjectEventInfo eventInfo)

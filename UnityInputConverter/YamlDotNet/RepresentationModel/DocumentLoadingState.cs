@@ -47,10 +47,12 @@ namespace UnityInputConverter.YamlDotNet.RepresentationModel
 
             if (anchors.ContainsKey(node.Anchor))
             {
-                throw new DuplicateAnchorException(node.Start, node.End, string.Format(CultureInfo.InvariantCulture, "The anchor '{0}' already exists", node.Anchor));
+                anchors[node.Anchor] = node;
             }
-
-            anchors.Add(node.Anchor, node);
+            else
+            {
+                anchors.Add(node.Anchor, node);
+            }
         }
 
         /// <summary>
@@ -94,19 +96,9 @@ namespace UnityInputConverter.YamlDotNet.RepresentationModel
         /// </summary>
         public void ResolveAliases()
         {
-            foreach(var node in nodesWithUnresolvedAliases)
+            foreach (var node in nodesWithUnresolvedAliases)
             {
                 node.ResolveAliases(this);
-
-#if DEBUG
-                foreach (var child in node.AllNodes)
-                {
-                    if (child is YamlAliasNode)
-                    {
-                        throw new InvalidOperationException("Error in alias resolution.");
-                    }
-                }
-#endif
             }
         }
     }

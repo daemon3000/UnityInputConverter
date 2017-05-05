@@ -13,6 +13,7 @@ namespace UnityInputConverter
 --- !u!13 &1
 {0}";
 
+		private const int IM_SERIALIZED_VERSION = 2;
 		private const int SERIALIZED_VERSION = 3;
 		private const int OBJECT_HIDE_FLAGS = 0;
 		private const int MOUSE_AXIS_TYPE = 1;
@@ -26,6 +27,10 @@ namespace UnityInputConverter
 
 			using(StreamReader reader = File.OpenText(sourceFile))
 			{
+				reader.ReadLine();
+				reader.ReadLine();
+				reader.ReadLine();
+
 				Deserializer deserializer = new Deserializer();
 				deserializedData = deserializer.Deserialize<IDictionary<object, object>>(reader);
 			}
@@ -59,11 +64,11 @@ namespace UnityInputConverter
 			axisConfig.snap = ParseInt(axisData["snap"].ToString()) != 0;
 			axisConfig.invert = ParseInt(axisData["invert"].ToString()) != 0;
 
-			axisConfig.positive = axisData["positiveButton"] != null ? KeyCodeConverter.Map[axisData["positiveButton"].ToString()] : KeyCode.None;
-			axisConfig.altPositive = axisData["altPositiveButton"] != null ? KeyCodeConverter.Map[axisData["altPositiveButton"].ToString()] : KeyCode.None;
-			axisConfig.negative = axisData["negativeButton"] != null ? KeyCodeConverter.Map[axisData["negativeButton"].ToString()] : KeyCode.None;
-			axisConfig.altNegative = axisData["altNegativeButton"] != null ? KeyCodeConverter.Map[axisData["altNegativeButton"].ToString()] : KeyCode.None;
-			
+			axisConfig.positive = ConvertUnityKeyCode(axisData["positiveButton"]);
+			axisConfig.altPositive = ConvertUnityKeyCode(axisData["altPositiveButton"]);
+			axisConfig.negative = ConvertUnityKeyCode(axisData["negativeButton"]);
+			axisConfig.altNegative = ConvertUnityKeyCode(axisData["altNegativeButton"]);
+
 			int axisType = ParseInt(axisData["type"].ToString());
 			int axisID = ParseInt(axisData["axis"].ToString());
 			int joystickID = ParseInt(axisData["joyNum"].ToString(), 1) - 1;
@@ -84,6 +89,18 @@ namespace UnityInputConverter
 			return axisConfig;
 		}
 
+		private KeyCode ConvertUnityKeyCode(object value)
+		{
+			if(value != null)
+			{
+				KeyCode keyCode = KeyCode.None;
+				if(KeyCodeConverter.Map.TryGetValue(value.ToString(), out keyCode))
+					return keyCode;
+			}
+
+			return KeyCode.None;
+		}
+
 		public void GenerateDefaultUnityInputManager(string destinationFile)
 		{
 			Dictionary<string, object> data = new Dictionary<string, object>();
@@ -92,6 +109,7 @@ namespace UnityInputConverter
 
 			data.Add("InputManager", inputManager);
 			inputManager.Add("m_ObjectHideFlags", OBJECT_HIDE_FLAGS);
+			inputManager.Add("serializedVersion", IM_SERIALIZED_VERSION);
 			inputManager.Add("m_Axes", axes);
 
 			for(int i = 0; i < AxisConfiguration.MaxMouseAxes; i++)

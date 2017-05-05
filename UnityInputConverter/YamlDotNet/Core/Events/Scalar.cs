@@ -31,8 +31,10 @@ namespace UnityInputConverter.YamlDotNet.Core.Events
         /// <summary>
         /// Gets the event type, which allows for simpler type comparisons.
         /// </summary>
-        internal override EventType Type {
-            get {
+        internal override EventType Type
+        {
+            get
+            {
                 return EventType.Scalar;
             }
         }
@@ -95,11 +97,13 @@ namespace UnityInputConverter.YamlDotNet.Core.Events
         /// Gets a value indicating whether this instance is canonical.
         /// </summary>
         /// <value></value>
-        public override bool IsCanonical {
-            get {
+        public override bool IsCanonical
+        {
+            get
+            {
                 return !isPlainImplicit && !isQuotedImplicit;
             }
-        }    
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scalar"/> class.

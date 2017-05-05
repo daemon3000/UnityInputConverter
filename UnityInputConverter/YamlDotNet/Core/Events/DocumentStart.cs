@@ -34,8 +34,10 @@ namespace UnityInputConverter.YamlDotNet.Core.Events
         /// The value can be either -1, 0 or 1. For start events, it will be 1,
         /// for end events, it will be -1, and for the remaining events, it will be 0.
         /// </summary>
-        public override int NestingIncrease {
-            get {
+        public override int NestingIncrease
+        {
+            get
+            {
                 return 1;
             }
         }
@@ -43,12 +45,14 @@ namespace UnityInputConverter.YamlDotNet.Core.Events
         /// <summary>
         /// Gets the event type, which allows for simpler type comparisons.
         /// </summary>
-        internal override EventType Type {
-            get {
+        internal override EventType Type
+        {
+            get
+            {
                 return EventType.DocumentStart;
             }
         }
-        
+
         private readonly TagDirectiveCollection tags;
         private readonly VersionDirective version;
 

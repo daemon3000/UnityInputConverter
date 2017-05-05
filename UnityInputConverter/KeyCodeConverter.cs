@@ -279,6 +279,17 @@ namespace UnityInputConverter
 			{ "end", KeyCode.End },
 			{ "page up", KeyCode.PageUp },
 			{ "page down", KeyCode.PageDown },
+			{ "pause", KeyCode.Pause },
+			{ ".", KeyCode.Period },
+			{ "/", KeyCode.Slash },
+			{ "=", KeyCode.Equals },
+			{ "[", KeyCode.LeftBracket },
+			{ "]", KeyCode.RightBracket },
+			{ "`", KeyCode.BackQuote },
+			{ ";", KeyCode.Semicolon },
+			{ "'", KeyCode.Quote },
+			{ ",", KeyCode.Comma },
+			{ "-", KeyCode.Minus },
 		};
 	}
 }

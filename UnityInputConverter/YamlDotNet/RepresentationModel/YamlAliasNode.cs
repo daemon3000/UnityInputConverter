@@ -58,7 +58,7 @@ namespace UnityInputConverter.YamlDotNet.RepresentationModel
         {
             throw new NotSupportedException("A YamlAliasNode is an implementation detail and should never be saved.");
         }
-        
+
         /// <summary>
         /// Accepts the specified visitor by calling the appropriate Visit method on it.
         /// </summary>
@@ -69,14 +69,14 @@ namespace UnityInputConverter.YamlDotNet.RepresentationModel
         {
             throw new NotSupportedException("A YamlAliasNode is an implementation detail and should never be visited.");
         }
-        
+
         /// <summary />
-        public override bool Equals(object other)
+        public override bool Equals(object obj)
         {
-            var obj = other as YamlAliasNode;
-            return obj != null && Equals(obj) && SafeEquals(Anchor, obj.Anchor);
+            var other = obj as YamlAliasNode;
+            return other != null && Equals(other) && SafeEquals(Anchor, other.Anchor);
         }
-        
+
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
@@ -94,17 +94,27 @@ namespace UnityInputConverter.YamlDotNet.RepresentationModel
         /// <returns>
         /// A <see cref="System.String"/> that represents this instance.
         /// </returns>
-        public override string ToString()
+        internal override string ToString(RecursionLevel level)
         {
             return "*" + Anchor;
         }
 
         /// <summary>
-        /// Gets all nodes from the document, starting on the current node.
+        /// Recursively enumerates all the nodes from the document, starting on the current node,
+        /// and throwing <see cref="MaximumRecursionLevelReachedException"/>
+        /// if <see cref="RecursionLevel.Maximum"/> is reached.
         /// </summary>
-        public override IEnumerable<YamlNode> AllNodes
+        internal override IEnumerable<YamlNode> SafeAllNodes(RecursionLevel level)
         {
-            get { yield return this; }
+            yield return this;
+        }
+
+        /// <summary>
+        /// Gets the type of node.
+        /// </summary>
+        public override YamlNodeType NodeType
+        {
+            get { return YamlNodeType.Alias; }
         }
     }
 }

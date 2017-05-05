@@ -73,7 +73,7 @@ namespace UnityInputConverter.YamlDotNet.Core.Tokens
         /// </returns>
         public override bool Equals(object obj)
         {
-            VersionDirective other = obj as VersionDirective;
+            var other = obj as VersionDirective;
             return other != null && version.Equals(other.version);
         }
 

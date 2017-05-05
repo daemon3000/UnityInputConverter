@@ -31,16 +31,16 @@ namespace UnityInputConverter.YamlDotNet.Core
     {
         private readonly IEnumerator<T> collection;
         private int currentIndex = -1;
-        
+
         /// <summary>
         /// Initializes a new instance of FakeList&lt;T&gt;.
         /// </summary>
         /// <param name="collection">The enumerator to use to implement the indexer.</param>
         public FakeList(IEnumerator<T> collection)
         {
-            this.collection = collection; 
+            this.collection = collection;
         }
-        
+
         /// <summary>
         /// Initializes a new instance of FakeList&lt;T&gt;.
         /// </summary>
@@ -57,20 +57,25 @@ namespace UnityInputConverter.YamlDotNet.Core
         /// If index is greater or equal than the last used index, this operation is O(index - lastIndex),
         /// else this operation is O(index).
         /// </remarks>
-        public T this[int index] {
-            get {
-                if(index < currentIndex) {
+        public T this[int index]
+        {
+            get
+            {
+                if (index < currentIndex)
+                {
                     collection.Reset();
                     currentIndex = -1;
                 }
-                
-                while(currentIndex < index) {
-                    if(!collection.MoveNext()) {
+
+                while (currentIndex < index)
+                {
+                    if (!collection.MoveNext())
+                    {
                         throw new ArgumentOutOfRangeException("index");
                     }
                     ++currentIndex;
                 }
-                
+
                 return collection.Current;
             }
         }

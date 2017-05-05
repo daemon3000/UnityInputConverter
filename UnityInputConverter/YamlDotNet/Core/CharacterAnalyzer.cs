@@ -29,20 +29,24 @@ namespace UnityInputConverter.YamlDotNet.Core
     internal class CharacterAnalyzer<TBuffer> where TBuffer : ILookAheadBuffer
     {
         private readonly TBuffer buffer;
-        
+
         public CharacterAnalyzer(TBuffer buffer)
         {
             this.buffer = buffer;
         }
-        
-        public TBuffer Buffer {
-            get {
+
+        public TBuffer Buffer
+        {
+            get
+            {
                 return buffer;
             }
         }
-        
-        public bool EndOfInput {
-            get {
+
+        public bool EndOfInput
+        {
+            get
+            {
                 return buffer.EndOfInput;
             }
         }
@@ -75,7 +79,7 @@ namespace UnityInputConverter.YamlDotNet.Core
 
         public bool IsPrintable(int offset = 0)
         {
-            var character = buffer.Peek(offset); 
+            var character = buffer.Peek(offset);
             return
                 character == '\x9' ||
                 character == '\xA' ||

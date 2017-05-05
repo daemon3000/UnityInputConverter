@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace UnityInputConverter.YamlDotNet.Core
 {
     /// <summary>
-    /// Base exception that is thrown when the a problem occurs in the YamlDotNet library.
+    /// Base exception that is thrown when the a problem occurs in the UnityInputConverter.YamlDotNet library.
     /// </summary>
     [Serializable]
     public class YamlException : Exception

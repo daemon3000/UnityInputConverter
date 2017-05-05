@@ -1,8 +1,7 @@
 #Junk folders
-bin*
-obj*
+obj/
+bin/
 .vs*
 
 #Junk files
-*.dll
 *.asset

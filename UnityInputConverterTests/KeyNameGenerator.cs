@@ -86,6 +86,17 @@ namespace UnityInputConverter.Tests
 			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "end", KeyCode.End);
 			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "page up", KeyCode.PageUp);
 			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "page down", KeyCode.PageDown);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "pause", KeyCode.Pause);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", ".", KeyCode.Period);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "/", KeyCode.Slash);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "=", KeyCode.Equals);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "[", KeyCode.LeftBracket);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "]", KeyCode.RightBracket);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "`", KeyCode.BackQuote);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", ";", KeyCode.Semicolon);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "'", KeyCode.Quote);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", ",", KeyCode.Comma);
+			builder.AppendFormat("\t\t\t{{ \"{0}\", KeyCode.{1} }},\n", "-", KeyCode.Minus);
 
 			builder.AppendLine("\t\t};");
 			builder.AppendLine("\t}");

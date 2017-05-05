@@ -63,7 +63,8 @@ namespace UnityInputConverter.YamlDotNet.Core.Events
         /// Gets a value indicating whether this instance is canonical.
         /// </summary>
         /// <value></value>
-        public abstract bool IsCanonical {
+        public abstract bool IsCanonical
+        {
             get;
         }
 
@@ -77,20 +78,24 @@ namespace UnityInputConverter.YamlDotNet.Core.Events
         protected NodeEvent(string anchor, string tag, Mark start, Mark end)
             : base(start, end)
         {
-            if(anchor != null) {
-                if(anchor.Length == 0) {
+            if (anchor != null)
+            {
+                if (anchor.Length == 0)
+                {
                     throw new ArgumentException("Anchor value must not be empty.", "anchor");
                 }
 
-                if(!anchorValidator.IsMatch(anchor)) {
+                if (!anchorValidator.IsMatch(anchor))
+                {
                     throw new ArgumentException("Anchor value must contain alphanumerical characters only.", "anchor");
                 }
             }
-                
-            if(tag != null && tag.Length == 0) {
+
+            if (tag != null && tag.Length == 0)
+            {
                 throw new ArgumentException("Tag value must not be empty.", "tag");
             }
-            
+
             this.anchor = anchor;
             this.tag = tag;
         }

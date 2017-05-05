@@ -116,10 +116,10 @@ namespace UnityInputConverter.YamlDotNet.Core
         {
             while (length >= count)
             {
-                int nextChar = input.Read();
+                var nextChar = input.Read();
                 if (nextChar >= 0)
                 {
-                    int lastIndex = GetIndexForOffset(count);
+                    var lastIndex = GetIndexForOffset(count);
                     buffer[lastIndex] = (char)nextChar;
                     ++count;
                 }

@@ -31,12 +31,14 @@ namespace UnityInputConverter.YamlDotNet.Core.Events
         /// <summary>
         /// Gets the event type, which allows for simpler type comparisons.
         /// </summary>
-        internal override EventType Type {
-            get {
+        internal override EventType Type
+        {
+            get
+            {
                 return EventType.Alias;
             }
         }
-        
+
         private readonly string value;
 
         /// <summary>
@@ -59,14 +61,16 @@ namespace UnityInputConverter.YamlDotNet.Core.Events
         public AnchorAlias(string value, Mark start, Mark end)
             : base(start, end)
         {
-            if(string.IsNullOrEmpty(value)) {
+            if (string.IsNullOrEmpty(value))
+            {
                 throw new YamlException(start, end, "Anchor value must not be empty.");
             }
 
-            if(!NodeEvent.anchorValidator.IsMatch(value)) {
+            if (!NodeEvent.anchorValidator.IsMatch(value))
+            {
                 throw new YamlException(start, end, "Anchor value must contain alphanumerical characters only.");
             }
-            
+
             this.value = value;
         }
 
