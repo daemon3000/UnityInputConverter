@@ -19,39 +19,49 @@ namespace UnityInputConverter
 		private const int MOUSE_AXIS_TYPE = 1;
 		private const int JOYSTICK_AXIS_TYPE = 2;
 
-		public void ConvertUnityInputManager(string sourceFile, string destinationFile)
-		{
-			List<InputConfiguration> inputConfigurations = new List<InputConfiguration>();
-			IDictionary<object, object> deserializedData = null;
-			InputConfiguration inputConfig = new InputConfiguration("Unity-Imported");
+        public void ConvertUnityInputManager(string sourceFile, string destinationFile)
+        {
+            try
+            {
+                List<InputConfiguration> inputConfigurations = new List<InputConfiguration>();
+                IDictionary<object, object> deserializedData = null;
+                InputConfiguration inputConfig = new InputConfiguration("Unity-Imported");
 
-			using(StreamReader reader = File.OpenText(sourceFile))
-			{
-				reader.ReadLine();
-				reader.ReadLine();
-				reader.ReadLine();
+                using (StreamReader reader = File.OpenText(sourceFile))
+                {
+                    reader.ReadLine();
+                    reader.ReadLine();
+                    reader.ReadLine();
 
-				Deserializer deserializer = new Deserializer();
-				deserializedData = deserializer.Deserialize<IDictionary<object, object>>(reader);
-			}
+                    Deserializer deserializer = new Deserializer();
+                    deserializedData = deserializer.Deserialize<IDictionary<object, object>>(reader);
+                }
 
-			if(deserializedData == null || deserializedData.Count == 0)
-				throw new System.FormatException();
+                if (deserializedData == null || deserializedData.Count == 0)
+                    throw new System.FormatException();
 
-			IDictionary<object, object> inputManager = (IDictionary<object, object>)deserializedData["InputManager"];
-			IList<object> axes = (IList<object>)inputManager["m_Axes"];
+                IDictionary<object, object> inputManager = (IDictionary<object, object>)deserializedData["InputManager"];
+                IList<object> axes = (IList<object>)inputManager["m_Axes"];
 
-			foreach(var item in axes)
-			{
-				IDictionary<object, object> axis = (IDictionary<object, object>)item;
-				inputConfig.axes.Add(ConvertUnityInputAxis(axis));
-			}
+                foreach (var item in axes)
+                {
+                    IDictionary<object, object> axis = (IDictionary<object, object>)item;
+                    inputConfig.axes.Add(ConvertUnityInputAxis(axis));
+                }
 
-			inputConfigurations.Add(inputConfig);
+                inputConfigurations.Add(inputConfig);
 
-			InputSaverXML inputSaver = new InputSaverXML(destinationFile);
-			inputSaver.Save(inputConfigurations);
-		}
+                InputSaverXML inputSaver = new InputSaverXML(destinationFile);
+                inputSaver.Save(inputConfigurations);
+            }
+            catch (SyntaxErrorException ex)
+            {
+                Debug.LogWarningFormat("You haven't set Serialization Mode in the EditorSettings in Force Text (setting it via script). Exception stacktrace:\n\n{0}", ex.Message);
+                EditorSettings.serializationMode = SerializationMode.ForceText;
+                AssetDatabase.Refresh();
+                ConvertUnityInputManager(sourceFile, destinationFile);
+            }
+        }
 
 		private AxisConfiguration ConvertUnityInputAxis(IDictionary<object, object> axisData)
 		{
