@@ -2,12 +2,12 @@
 {
 	internal enum InputType
 	{
-		Button, 
-		MouseAxis, 
-		DigitalAxis, 
-		AnalogAxis,
-		RemoteAxis,
+		Button,
+		MouseAxis,
+		DigitalAxis,
 		RemoteButton,
-		AnalogButton
+		RemoteAxis,
+		AnalogButton,
+		AnalogAxis,
 	}
 }

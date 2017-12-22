@@ -45,8 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AxisConfiguration.cs" />
-    <Compile Include="InputConfiguration.cs" />
+    <Compile Include="InputAction.cs" />
+    <Compile Include="InputBinding.cs" />
+    <Compile Include="ControlScheme.cs" />
     <Compile Include="InputSaverXML.cs" />
     <Compile Include="InputConverter.cs" />
     <Compile Include="InputType.cs" />

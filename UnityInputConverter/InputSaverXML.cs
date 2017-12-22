@@ -3,118 +3,123 @@ using System.IO;
 using System.Xml;
 using System.Text;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace UnityInputConverter
 {
 	internal class InputSaverXML
 	{
-		private string _filename;
-		private Stream _outputStream;
-		private StringBuilder _output;
-		
+		private const int VERSION = 2;
+
+		private string m_filename;
+		private Stream m_outputStream;
+		private StringBuilder m_output;
+
 		public InputSaverXML(string filename)
 		{
-			if(filename == null)
-				throw new ArgumentNullException("filename");
-			
-			_filename = filename;
-			_outputStream = null;
-			_output = null;
+			m_filename = filename ?? throw new ArgumentNullException("filename");
+			m_outputStream = null;
+			m_output = null;
 		}
 
 		public InputSaverXML(Stream stream)
 		{
-			if(stream == null)
-				throw new ArgumentNullException("stream");
-			
-			_filename = null;
-			_output = null;
-			_outputStream = stream;
+			m_outputStream = stream ?? throw new ArgumentNullException("stream");
+			m_filename = null;
+			m_output = null;
 		}
-		
+
 		public InputSaverXML(StringBuilder output)
 		{
-			if(output == null)
-				throw new ArgumentNullException("output");
-			
-			_filename = null;
-			_outputStream = null;
-			_output = output;
+			m_output = output ?? throw new ArgumentNullException("output");
+			m_filename = null;
+			m_outputStream = null;
 		}
-		
-		public void Save(List<InputConfiguration> inputConfigurations)
+
+		private XmlWriter CreateXmlWriter(XmlWriterSettings settings)
 		{
-			XmlWriterSettings xmlSettings = new XmlWriterSettings();
-			xmlSettings.Encoding = System.Text.Encoding.UTF8;
-			xmlSettings.Indent = true;
-			
+			if(m_filename != null)
+			{
+				return XmlWriter.Create(m_filename, settings);
+			}
+			else if(m_outputStream != null)
+			{
+				return XmlWriter.Create(m_outputStream, settings);
+			}
+			else if(m_output != null)
+			{
+				return XmlWriter.Create(m_output, settings);
+			}
+
+			return null;
+		}
+
+		public void Save(List<ControlScheme> controlSchemes)
+		{
+			XmlWriterSettings xmlSettings = new XmlWriterSettings
+			{
+				Encoding = Encoding.UTF8,
+				Indent = true
+			};
+
 			using(XmlWriter writer = CreateXmlWriter(xmlSettings))
 			{
 				writer.WriteStartDocument(true);
 				writer.WriteStartElement("Input");
-				writer.WriteAttributeString("playerOneDefault", "");
-                writer.WriteAttributeString("playerTwoDefault", "");
-                writer.WriteAttributeString("playerThreeDefault", "");
-                writer.WriteAttributeString("playerFourDefault", "");
-                foreach (InputConfiguration inputConfig in inputConfigurations)
+				writer.WriteAttributeString("version", VERSION.ToString());
+				writer.WriteElementString("PlayerOneScheme", controlSchemes.Count > 0 ? controlSchemes[0].UniqueID : "");
+				writer.WriteElementString("PlayerTwoScheme", "");
+				writer.WriteElementString("PlayerThreeScheme", "");
+				writer.WriteElementString("PlayerFourScheme", "");
+				foreach(ControlScheme scheme in controlSchemes)
 				{
-					WriteInputConfiguration(inputConfig, writer);
+					WriteControlScheme(scheme, writer);
 				}
-				
+
 				writer.WriteEndElement();
 				writer.WriteEndDocument();
 			}
 		}
-		
-		private XmlWriter CreateXmlWriter(XmlWriterSettings settings)
+
+		private void WriteControlScheme(ControlScheme scheme, XmlWriter writer)
 		{
-			if(_filename != null)
+			writer.WriteStartElement("ControlScheme");
+			writer.WriteAttributeString("name", scheme.Name);
+			writer.WriteAttributeString("id", scheme.UniqueID);
+			foreach(var action in scheme.Actions)
 			{
-		        return XmlWriter.Create(_filename, settings);
+				WriteInputAction(action, writer);
 			}
-			else if(_outputStream != null)
-			{
-				return XmlWriter.Create(_outputStream, settings);
-			}
-			else if(_output != null)
-			{
-				return XmlWriter.Create(_output, settings);
-			}
-			
-			return null;
-		}
-		
-		private void WriteInputConfiguration(InputConfiguration inputConfig, XmlWriter writer)
-		{
-			writer.WriteStartElement("InputConfiguration");
-			writer.WriteAttributeString("name", inputConfig.name);
-			foreach(AxisConfiguration axisConfig in inputConfig.axes)
-			{
-				WriteAxisConfiguration(axisConfig, writer);
-			}
-			
+
 			writer.WriteEndElement();
 		}
-		
-		private void WriteAxisConfiguration(AxisConfiguration axisConfig, XmlWriter writer)
+
+		private void WriteInputAction(InputAction action, XmlWriter writer)
 		{
-			writer.WriteStartElement("AxisConfiguration");
-			writer.WriteAttributeString("name", axisConfig.name);
-			writer.WriteElementString("description", axisConfig.description);
-			writer.WriteElementString("positive", axisConfig.positive.ToString());
-			writer.WriteElementString("altPositive", axisConfig.altPositive.ToString());
-			writer.WriteElementString("negative", axisConfig.negative.ToString());
-			writer.WriteElementString("altNegative", axisConfig.altNegative.ToString());
-			writer.WriteElementString("deadZone", axisConfig.deadZone.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("gravity", axisConfig.gravity.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("sensitivity", axisConfig.sensitivity.ToString(CultureInfo.InvariantCulture));
-			writer.WriteElementString("snap", axisConfig.snap.ToString().ToLower());
-			writer.WriteElementString("invert", axisConfig.invert.ToString().ToLower());
-			writer.WriteElementString("type", axisConfig.type.ToString());
-			writer.WriteElementString("axis", axisConfig.axis.ToString());
-			writer.WriteElementString("joystick", axisConfig.joystick.ToString());
-			
+			writer.WriteStartElement("Action");
+			writer.WriteAttributeString("name", action.Name);
+			writer.WriteElementString("Description", action.Description);
+			foreach(var binding in action.Bindings)
+			{
+				WriteInputBinding(binding, writer);
+			}
+
+			writer.WriteEndElement();
+		}
+
+		private void WriteInputBinding(InputBinding binding, XmlWriter writer)
+		{
+			writer.WriteStartElement("Binding");
+			writer.WriteElementString("Positive", binding.Positive.ToString());
+			writer.WriteElementString("Negative", binding.Negative.ToString());
+			writer.WriteElementString("DeadZone", binding.DeadZone.ToString());
+			writer.WriteElementString("Gravity", binding.Gravity.ToString());
+			writer.WriteElementString("Sensitivity", binding.Sensitivity.ToString());
+			writer.WriteElementString("Snap", binding.Snap.ToString().ToLower());
+			writer.WriteElementString("Invert", binding.Invert.ToString().ToLower());
+			writer.WriteElementString("Type", binding.Type.ToString());
+			writer.WriteElementString("Axis", binding.Axis.ToString());
+			writer.WriteElementString("Joystick", binding.Joystick.ToString());
+
 			writer.WriteEndElement();
 		}
 	}

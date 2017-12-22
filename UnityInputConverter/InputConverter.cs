@@ -13,17 +13,16 @@ namespace UnityInputConverter
 --- !u!13 &1
 {0}";
 
-		private const int IM_SERIALIZED_VERSION = 2;
 		private const int SERIALIZED_VERSION = 3;
 		private const int OBJECT_HIDE_FLAGS = 0;
+		private const int BUTTON_TYPE = 0;
 		private const int MOUSE_AXIS_TYPE = 1;
 		private const int JOYSTICK_AXIS_TYPE = 2;
 
 		public void ConvertUnityInputManager(string sourceFile, string destinationFile)
 		{
-			List<InputConfiguration> inputConfigurations = new List<InputConfiguration>();
 			IDictionary<object, object> deserializedData = null;
-			InputConfiguration inputConfig = new InputConfiguration("Unity-Imported");
+			ControlScheme scheme = new ControlScheme("Unity-Imported");
 
 			using(StreamReader reader = File.OpenText(sourceFile))
 			{
@@ -44,49 +43,61 @@ namespace UnityInputConverter
 			foreach(var item in axes)
 			{
 				IDictionary<object, object> axis = (IDictionary<object, object>)item;
-				inputConfig.axes.Add(ConvertUnityInputAxis(axis));
+				scheme.Actions.Add(ConvertUnityInputAxis(axis));
 			}
 
-			inputConfigurations.Add(inputConfig);
-
 			InputSaverXML inputSaver = new InputSaverXML(destinationFile);
-			inputSaver.Save(inputConfigurations);
+			inputSaver.Save(new List<ControlScheme> { scheme });
 		}
 
-		private AxisConfiguration ConvertUnityInputAxis(IDictionary<object, object> axisData)
+		private InputAction ConvertUnityInputAxis(IDictionary<object, object> axisData)
 		{
-			AxisConfiguration axisConfig = new AxisConfiguration();
-
-			axisConfig.name = axisData["m_Name"].ToString();
-			axisConfig.gravity = ParseFloat(axisData["gravity"].ToString());
-			axisConfig.deadZone = ParseFloat(axisData["dead"].ToString());
-			axisConfig.sensitivity = ParseFloat(axisData["sensitivity"].ToString());
-			axisConfig.snap = ParseInt(axisData["snap"].ToString()) != 0;
-			axisConfig.invert = ParseInt(axisData["invert"].ToString()) != 0;
-
-			axisConfig.positive = ConvertUnityKeyCode(axisData["positiveButton"]);
-			axisConfig.altPositive = ConvertUnityKeyCode(axisData["altPositiveButton"]);
-			axisConfig.negative = ConvertUnityKeyCode(axisData["negativeButton"]);
-			axisConfig.altNegative = ConvertUnityKeyCode(axisData["altNegativeButton"]);
-
 			int axisType = ParseInt(axisData["type"].ToString());
 			int axisID = ParseInt(axisData["axis"].ToString());
 			int joystickID = ParseInt(axisData["joyNum"].ToString(), 1) - 1;
 
-			axisConfig.type = ParseInputType(axisType);
-			if(axisConfig.type == InputType.Button)
+			InputAction action = new InputAction
 			{
-				if((axisConfig.positive != KeyCode.None || axisConfig.altPositive != KeyCode.None) &&
-					(axisConfig.negative != KeyCode.None || axisConfig.altNegative != KeyCode.None))
+				Name = axisData["m_Name"].ToString()
+			};
+
+			InputBinding binding = action.CreateNewBinding();
+			binding.Gravity = ParseFloat(axisData["gravity"].ToString());
+			binding.DeadZone = ParseFloat(axisData["dead"].ToString());
+			binding.Sensitivity = ParseFloat(axisData["sensitivity"].ToString());
+			binding.Snap = ParseInt(axisData["snap"].ToString()) != 0;
+			binding.Invert = ParseInt(axisData["invert"].ToString()) != 0;
+			binding.Positive = ConvertUnityKeyCode(axisData["positiveButton"]);
+			binding.Negative = ConvertUnityKeyCode(axisData["negativeButton"]);
+			binding.Type = ParseInputType(axisType);
+			binding.Axis = Clamp(axisID, 0, InputBinding.MAX_JOYSTICK_AXES - 1);
+			binding.Joystick = Clamp(joystickID, 0, InputBinding.MAX_JOYSTICKS);
+
+			KeyCode altPositive = ConvertUnityKeyCode(axisData["altPositiveButton"]);
+			KeyCode altNegative = ConvertUnityKeyCode(axisData["altNegativeButton"]);
+			if(binding.Type == InputType.Button)
+			{
+				if(binding.Positive != KeyCode.None && binding.Negative != KeyCode.None)
 				{
-					axisConfig.type = InputType.DigitalAxis;
+					binding.Type = InputType.DigitalAxis;
+				}
+
+				if(altPositive != KeyCode.None && altNegative != KeyCode.None)
+				{
+					var altBinding = action.CreateNewBinding(binding);
+					altBinding.Positive = altPositive;
+					altBinding.Negative = altNegative;
+					altBinding.Type = InputType.DigitalAxis;
+				}
+				else if(altPositive != KeyCode.None)
+				{
+					var altBinding = action.CreateNewBinding(binding);
+					altBinding.Positive = altPositive;
+					altBinding.Type = InputType.Button;
 				}
 			}
 
-			axisConfig.axis = axisID >= 0 && axisID < AxisConfiguration.MaxJoystickAxes ? axisID : 0;
-			axisConfig.joystick = joystickID >= 0 && joystickID < AxisConfiguration.MaxJoysticks ? joystickID : 0;
-
-			return axisConfig;
+			return action;
 		}
 
 		private KeyCode ConvertUnityKeyCode(object value)
@@ -109,17 +120,16 @@ namespace UnityInputConverter
 
 			data.Add("InputManager", inputManager);
 			inputManager.Add("m_ObjectHideFlags", OBJECT_HIDE_FLAGS);
-			inputManager.Add("serializedVersion", IM_SERIALIZED_VERSION);
 			inputManager.Add("m_Axes", axes);
 
-			for(int i = 0; i < AxisConfiguration.MaxMouseAxes; i++)
+			for(int i = 0; i < InputBinding.MAX_MOUSE_AXES; i++)
 			{
 				axes.Add(GenerateUnityMouseAxis(i));
 			}
 
-			for(int j = 1; j <= AxisConfiguration.MaxJoysticks; j++)
+			for(int j = 1; j <= InputBinding.MAX_JOYSTICKS; j++)
 			{
-				for(int a = 0; a < AxisConfiguration.MaxJoystickAxes; a++)
+				for(int a = 0; a < InputBinding.MAX_JOYSTICK_AXES; a++)
 				{
 					axes.Add(GenerateUnityJoystickAxis(j, a));
 				}
@@ -137,51 +147,61 @@ namespace UnityInputConverter
 
 		public Dictionary<string, object> GenerateUnityMouseAxis(int axis)
 		{
-			Dictionary<string, object> data = new Dictionary<string, object>();
-			data.Add("serializedVersion", SERIALIZED_VERSION);
-			data.Add("m_Name", string.Format("mouse_axis_{0}", axis));
-			data.Add("descriptiveName", null);
-			data.Add("descriptiveNegativeName", null);
-			data.Add("negativeButton", null);
-			data.Add("positiveButton", null);
-			data.Add("altNegativeButton", null);
-			data.Add("altPositiveButton", null);
-			data.Add("gravity", 0);
-			data.Add("dead", 0);
-			data.Add("sensitivity", 1);
-			data.Add("snap", 0);
-			data.Add("invert", 0);
-			data.Add("type", MOUSE_AXIS_TYPE);
-			data.Add("axis", axis);
-			data.Add("joyNum", 0);
-
-			return data;
+			return new Dictionary<string, object>
+			{
+				{ "serializedVersion", SERIALIZED_VERSION },
+				{ "m_Name", string.Format("mouse_axis_{0}", axis) },
+				{ "descriptiveName", null },
+				{ "descriptiveNegativeName", null },
+				{ "negativeButton", null },
+				{ "positiveButton", null },
+				{ "altNegativeButton", null },
+				{ "altPositiveButton", null },
+				{ "gravity", 0 },
+				{ "dead", 0 },
+				{ "sensitivity", 1 },
+				{ "snap", 0 },
+				{ "invert", 0 },
+				{ "type", MOUSE_AXIS_TYPE },
+				{ "axis", axis },
+				{ "joyNum", 0 }
+			};
 		}
 
 		public Dictionary<string, object> GenerateUnityJoystickAxis(int joystick, int axis)
 		{
-			Dictionary<string, object> data = new Dictionary<string, object>();
-			data.Add("serializedVersion", SERIALIZED_VERSION);
-			data.Add("m_Name", string.Format("joy_{0}_axis_{1}", joystick - 1, axis));
-			data.Add("descriptiveName", null);
-			data.Add("descriptiveNegativeName", null);
-			data.Add("negativeButton", null);
-			data.Add("positiveButton", null);
-			data.Add("altNegativeButton", null);
-			data.Add("altPositiveButton", null);
-			data.Add("gravity", 0);
-			data.Add("dead", 0);
-			data.Add("sensitivity", 1);
-			data.Add("snap", 0);
-			data.Add("invert", 0);
-			data.Add("type", JOYSTICK_AXIS_TYPE);
-			data.Add("axis", axis);
-			data.Add("joyNum", joystick);
-
-			return data;
+			return new Dictionary<string, object>
+			{
+				{ "serializedVersion", SERIALIZED_VERSION },
+				{ "m_Name", string.Format("joy_{0}_axis_{1}", joystick - 1, axis) },
+				{ "descriptiveName", null },
+				{ "descriptiveNegativeName", null },
+				{ "negativeButton", null },
+				{ "positiveButton", null },
+				{ "altNegativeButton", null },
+				{ "altPositiveButton", null },
+				{ "gravity", 0 },
+				{ "dead", 0 },
+				{ "sensitivity", 1 },
+				{ "snap", 0 },
+				{ "invert", 0 },
+				{ "type", JOYSTICK_AXIS_TYPE },
+				{ "axis", axis },
+				{ "joyNum", joystick }
+			};
 		}
 
 		#region [Helper Methods]
+		private int Clamp(int value, int min, int max)
+		{
+			if(value < min)
+				return min;
+			if(value > max)
+				return max;
+
+			return value;
+		}
+
 		private float ParseFloat(string str, float defValue = 0.0f)
 		{
 			float value = defValue;
@@ -202,15 +222,15 @@ namespace UnityInputConverter
 
 		private InputType ParseInputType(int type, InputType defValue = InputType.Button)
 		{
-			if(type == 0)
+			if(type == BUTTON_TYPE)
 			{
 				return InputType.Button;
 			}
-			else if(type == 1)
+			else if(type == MOUSE_AXIS_TYPE)
 			{
 				return InputType.MouseAxis;
 			}
-			else if(type == 2)
+			else if(type == JOYSTICK_AXIS_TYPE)
 			{
 				return InputType.AnalogAxis;
 			}
