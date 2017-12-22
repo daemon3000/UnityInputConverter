@@ -1,0 +1,36 @@
+﻿using UnityEngine;
+using System.Collections.Generic;
+
+namespace UnityInputConverter
+{{
+	public static class KeyCodeConverter
+	{{
+		public static KeyCode StringToKey(string str)
+		{{
+			KeyCode key = KeyCode.None;
+			if(m_stringToKeyMap.TryGetValue(str, out key))
+				return key;
+
+			return KeyCode.None;
+		}}
+
+		public static string KeyToString(KeyCode key)
+		{{
+			string str = string.Empty;
+			if(m_keyToStringMap.TryGetValue(key, out str))
+				return str;
+
+			return string.Empty;
+		}}
+
+		private static Dictionary<string, KeyCode> m_stringToKeyMap = new Dictionary<string, KeyCode>()
+		{{
+{0}
+		}};
+
+		private static Dictionary<KeyCode, string> m_keyToStringMap = new Dictionary<KeyCode, string>()
+		{{
+{1}
+		}};
+	}}
+}}

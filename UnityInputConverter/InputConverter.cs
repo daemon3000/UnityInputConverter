@@ -104,9 +104,7 @@ namespace UnityInputConverter
 		{
 			if(value != null)
 			{
-				KeyCode keyCode = KeyCode.None;
-				if(KeyCodeConverter.Map.TryGetValue(value.ToString(), out keyCode))
-					return keyCode;
+				return KeyCodeConverter.StringToKey(value.ToString());
 			}
 
 			return KeyCode.None;
