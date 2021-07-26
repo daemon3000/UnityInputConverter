@@ -307,6 +307,7 @@ namespace UnityInputConverter
 			{ "'", KeyCode.Quote },
 			{ ",", KeyCode.Comma },
 			{ "-", KeyCode.Minus },
+			{ "caps lock", KeyCode.CapsLock },
 		};
 
 		private static Dictionary<KeyCode, string> m_keyToStringMap = new Dictionary<KeyCode, string>()
@@ -593,6 +594,7 @@ namespace UnityInputConverter
 			{ KeyCode.Quote, "'" },
 			{ KeyCode.Comma, "," },
 			{ KeyCode.Minus, "-" },
+			{ KeyCode.CapsLock, "caps lock" },
 		};
 	}
 }
